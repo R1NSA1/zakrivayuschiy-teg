@@ -5,7 +5,6 @@ const closeButton = document.querySelector(".button__popup-close");
 if (openButton) {
   openButton.addEventListener("click", (event) => {
     event.preventDefault();
-    event.stopPropagation();
     popup.showModal();
   });
 }
@@ -13,14 +12,17 @@ if (openButton) {
 if (closeButton) {
   closeButton.addEventListener("click", (event) => {
     event.preventDefault();
-    event.stopPropagation();
     popup.close();
   });
 }
 
-document.addEventListener("submit", (event) => {
-  event.preventDefault();
-});
+if (popup) {
+  popup.addEventListener("click", (event) => {
+    if (event.target === popup) {
+      popup.close();
+    }
+  });
+}
 
 const likeHeartArray = document.querySelectorAll(".like-icon");
 const likeButtonArray = document.querySelectorAll(".card__like-button");
@@ -29,7 +31,6 @@ const iconButtonArray = document.querySelectorAll(".card__icon-button");
 iconButtonArray.forEach((iconButton, index) => {
   iconButton.addEventListener("click", (event) => {
     event.preventDefault();
-    event.stopPropagation();
     toggleIsLiked(likeHeartArray[index], likeButtonArray[index]);
   });
 });
@@ -37,7 +38,6 @@ iconButtonArray.forEach((iconButton, index) => {
 likeButtonArray.forEach((button, index) => {
   button.addEventListener("click", (event) => {
     event.preventDefault();
-    event.stopPropagation();
     toggleIsLiked(likeHeartArray[index], button);
   });
 });
